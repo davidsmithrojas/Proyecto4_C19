@@ -1,26 +1,26 @@
-# 🏨 API de Reservas de Hotel
+# 🏨 Reservas de Hotel
 
 Este es un proyecto backend desarrollado con Node.js y Express para gestionar reservas de hotel, con funcionalidades CRUD completas. Las reservas se almacenan en un archivo JSON local.
 
-## 📁 Estructura de Archivos 
+## 📁 Estructura del Archivo 
 ```text
 
 .
 ├── src
     ├── assets/ 
-│   ├── config/          # Configuración general (Swagger, etc.)
-│   ├── controllers/     # Lógica de negocio de las reservas
-│   ├── data/            # Archivos de datos locales (reservas.json)
-│   └── routes/          # Definición de rutas de la API
-├── .env                 # Variables de entorno
+│   ├── config/         
+│   ├── controllers/    
+│   ├── data/          
+│   └── routes/        
+├── .env                 
 ├── .gitignore
-├── .prettierrc          # Configuración de Prettier
+├── .prettierrc          
 ├── package.json
 ├── package-lock.json
-└── server.js            # Punto de entrada principal
+└── server.js         
 ```
 
-## 🧩 Endpoints disponibles
+## 🧩 Endpoints Utilizados
 ```text
 POST /api/reservas/
 ```
