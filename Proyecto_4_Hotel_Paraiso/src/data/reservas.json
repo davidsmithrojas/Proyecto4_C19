@@ -1,0 +1,210 @@
+[
+    {
+      "id": 1,
+      "hotel": "Hotel Paraíso",
+      "cod_reserva": "RES-001",
+      "fecha_inicio": "2025-08-15",
+      "fecha_fin": "2025-08-20",
+      "tipo_habitacion": "doble",
+      "num_adultos": 1,
+      "num_huespedes": 2,
+      "estado": "confirmada"
+    },
+    {
+      "id": 2,
+      "hotel": "Hotel Paraíso",
+      "fecha_inicio": "2025-08-22",
+      "fecha_fin": "2025-08-25",
+      "tipo_habitacion": "suite",
+      "num_huespedes": 4,
+      "estado": "pendiente"
+    },
+    {
+      "id": 3,
+      "hotel": "Hotel Paraíso",
+      "fecha_inicio": "2025-09-10",
+      "fecha_fin": "2025-09-12",
+      "tipo_habitacion": "individual",
+      "num_huespedes": 1,
+      "estado": "confirmada"
+    },
+    {
+      "id": 4,
+      "hotel": "Hotel Paraíso",
+      "fecha_inicio": "2025-09-15",
+      "fecha_fin": "2025-09-18",
+      "tipo_habitacion": "triple",
+      "num_huespedes": 3,
+      "estado": "pendiente"
+    },
+    {
+      "id": 5,
+      "hotel": "Hotel Paraíso",
+      "fecha_inicio": "2025-10-01",
+      "fecha_fin": "2025-10-07",
+      "tipo_habitacion": "suite",
+      "num_huespedes": 2,
+      "estado": "cancelada"
+    },
+    {
+      "id": 6,
+      "hotel": "Hotel Paraíso",
+      "fecha_inicio": "2025-07-20",
+      "fecha_fin": "2025-07-25",
+      "tipo_habitacion": "doble",
+      "num_huespedes": 2,
+      "estado": "completada"
+    },
+    {
+      "id": 7,
+      "hotel": "Hotel Paraíso",
+      "fecha_inicio": "2025-11-24",
+      "fecha_fin": "2025-11-30",
+      "tipo_habitacion": "suite",
+      "num_huespedes": 4,
+      "estado": "confirmada"
+    },
+    {
+      "id": 8,
+      "hotel": "Hotel Paraíso",
+      "fecha_inicio": "2025-12-20",
+      "fecha_fin": "2025-12-25",
+      "tipo_habitacion": "triple",
+      "num_huespedes": 3,
+      "estado": "pendiente"
+    },
+    {
+      "id": 9,
+      "hotel": "Hotel Paraíso",
+      "fecha_inicio": "2025-08-05",
+      "fecha_fin": "2025-08-08",
+      "tipo_habitacion": "individual",
+      "num_huespedes": 1,
+      "estado": "confirmada"
+    },
+    {
+      "id": 10,
+      "hotel": "Hotel Paraíso",
+      "fecha_inicio": "2025-09-28",
+      "fecha_fin": "2025-10-02",
+      "tipo_habitacion": "doble",
+      "num_huespedes": 2,
+      "estado": "pendiente"
+    },
+    {
+      "id": 11,
+      "hotel": "Hotel Paraíso",
+      "fecha_inicio": "2025-06-15",
+      "fecha_fin": "2025-06-18",
+      "tipo_habitacion": "individual",
+      "num_huespedes": 1,
+      "estado": "completada"
+    },
+    {
+      "id": 12,
+      "hotel": "Hotel Paraíso",
+      "fecha_inicio": "2025-12-31",
+      "fecha_fin": "2026-01-03",
+      "tipo_habitacion": "suite",
+      "num_huespedes": 4,
+      "estado": "confirmada"
+    },
+    {
+      "id": 13,
+      "hotel": "Hotel Paraíso",
+      "fecha_inicio": "2025-08-12",
+      "fecha_fin": "2025-08-14",
+      "tipo_habitacion": "doble",
+      "num_huespedes": 1,
+      "estado": "pendiente"
+    },
+    {
+      "id": 14,
+      "hotel": "Hotel Paraíso",
+      "fecha_inicio": "2025-11-10",
+      "fecha_fin": "2025-11-15",
+      "tipo_habitacion": "triple",
+      "num_huespedes": 2,
+      "estado": "confirmada"
+    },
+    {
+      "id": 15,
+      "hotel": "Hotel Paraíso",
+      "fecha_inicio": "2025-10-20",
+      "fecha_fin": "2025-10-22",
+      "tipo_habitacion": "individual",
+      "num_huespedes": 1,
+      "estado": "cancelada"
+    },
+    {
+      "id": 16,
+      "hotel": "Hotel Paraíso",
+      "fecha_inicio": "2025-08-28",
+      "fecha_fin": "2025-08-30",
+      "tipo_habitacion": "doble",
+      "num_huespedes": 2,
+      "estado": "confirmada"
+    },
+    {
+      "id": 17,
+      "hotel": "Hotel Paraíso",
+      "fecha_inicio": "2025-09-05",
+      "fecha_fin": "2025-09-08",
+      "tipo_habitacion": "individual",
+      "num_huespedes": 1,
+      "estado": "pendiente"
+    },
+    {
+      "id": 18,
+      "hotel": "Hotel Paraíso",
+      "fecha_inicio": "2025-10-15",
+      "fecha_fin": "2025-10-18",
+      "tipo_habitacion": "suite",
+      "num_huespedes": 3,
+      "estado": "confirmada"
+    },
+    {
+      "id": 19,
+      "hotel": "Hotel Paraíso",
+      "fecha_inicio": "2025-11-01",
+      "fecha_fin": "2025-11-04",
+      "tipo_habitacion": "triple",
+      "num_huespedes": 3,
+      "estado": "pendiente"
+    },
+    {
+      "id": 20,
+      "hotel": "Hotel Paraíso",
+      "fecha_inicio": "2025-10-20",
+      "fecha_fin": "2025-10-25",
+      "tipo_habitacion": "doble",
+      "num_huespedes": 1,
+      "estado": "confirmada"
+    },
+    {
+      "id": 21,
+      "hotel": "Hotel Paraíso",
+      "fecha_inicio": "2025-07-10",
+      "fecha_fin": "2025-07-13",
+      "tipo_habitacion": "individual",
+      "num_huespedes": 1,
+      "estado": "completada"
+    },
+    {
+      "id": 22,
+      "hotel": "Hotel Paraíso",
+      "fecha_inicio": "2025-09-22",
+      "fecha_fin": "2025-09-25",
+      "tipo_habitacion": "suite",
+      "num_huespedes": 4,
+      "estado": "pendiente"
+    },
+    {
+      "id": 23,
+      "hotel": "Hotel Paraíso",
+      "fecha_inicio": "2025-10-08",
+      "fecha_fin": "2025-10-12",
+      "tipo_habitacion": "triple",
+      "num_huespedes": 2,
+      "estado": "confirmada"
+    }

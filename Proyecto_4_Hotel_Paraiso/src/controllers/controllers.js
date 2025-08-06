@@ -1,0 +1,131 @@
+import fs from 'fs/promises';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import 'datejs';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const filePath = path.join(__dirname, '../data/reservas.json');
+
+// Constantes para validaciones
+const TIPOS_HABITACION_VALIDOS = ['individual', 'doble', 'triple', 'suite'];
+const ESTADOS_VALIDOS = ['pendiente', 'confirmada', 'cancelada', 'completada'];
+const CAPACIDADES_HABITACION = {
+  individual: { min: 1, max: 1 },
+  doble: { min: 1, max: 2 },
+  triple: { min: 1, max: 3 },
+  suite: { min: 1, max: 4 }
+};
+
+// Funciones de validación
+const validarFecha = (fecha) => {
+  const regex = /^\d{4}-\d{2}-\d{2}$/;
+  if (!regex.test(fecha)) {
+    return false;
+  }
+  const fechaObj = new Date(fecha);
+  return fechaObj instanceof Date && !isNaN(fechaObj) && fecha === fechaObj.toISOString().split('T')[0];
+};
+
+const validarFechasCoherentes = (fecha_inicio, fecha_fin) => {
+  const inicio = new Date(fecha_inicio);
+  const fin = new Date(fecha_fin);
+  return inicio < fin;
+};
+
+const validarFechaNoEnPasado = (fecha) => {
+  const fechaObj = new Date(fecha);
+  const hoy = new Date();
+  hoy.setHours(0, 0, 0, 0); // Establecer a medianoche para comparar solo fechas
+  return fechaObj >= hoy;
+};
+
+const validarTipoHabitacion = (tipo) => {
+  return TIPOS_HABITACION_VALIDOS.includes(tipo);
+};
+
+const validarEstado = (estado) => {
+  return ESTADOS_VALIDOS.includes(estado);
+};
+
+const validarCapacidadHabitacion = (tipo_habitacion, num_huespedes) => {
+  const capacidad = CAPACIDADES_HABITACION[tipo_habitacion];
+  if (!capacidad) return false;
+  return num_huespedes >= capacidad.min && num_huespedes <= capacidad.max;
+};
+
+const validarDatosReserva = (datos, esCreacion = true) => {
+  const errores = [];
+
+  // Validaciones obligatorias para creación
+  if (esCreacion) {
+    if (!datos.hotel || datos.hotel.trim() === '') {
+      errores.push('El campo hotel es obligatorio');
+    }
+    if (!datos.fecha_inicio) {
+      errores.push('La fecha de inicio es obligatoria');
+    }
+    if (!datos.fecha_fin) {
+      errores.push('La fecha de fin es obligatoria');
+    }
+    if (!datos.tipo_habitacion) {
+      errores.push('El tipo de habitación es obligatorio');
+    }
+    if (!datos.num_huespedes) {
+      errores.push('El número de huéspedes es obligatorio');
+    }
+  }
+
+  // Validación de fechas
+  if (datos.fecha_inicio && !validarFecha(datos.fecha_inicio)) {
+    errores.push('La fecha de inicio debe tener el formato YYYY-MM-DD');
+  }
+  if (datos.fecha_fin && !validarFecha(datos.fecha_fin)) {
+    errores.push('La fecha de fin debe tener el formato YYYY-MM-DD');
+  }
+
+  // Validación de coherencia de fechas
+  if (datos.fecha_inicio && datos.fecha_fin && validarFecha(datos.fecha_inicio) && validarFecha(datos.fecha_fin)) {
+    if (!validarFechasCoherentes(datos.fecha_inicio, datos.fecha_fin)) {
+      errores.push('La fecha de inicio debe ser anterior a la fecha de fin');
+    }
+    
+    // Solo validar fechas no en pasado para creación o cuando se actualicen fechas
+    if (esCreacion || datos.fecha_inicio) {
+      if (!validarFechaNoEnPasado(datos.fecha_inicio)) {
+        errores.push('La fecha de inicio no puede ser en el pasado');
+      }
+    }
+  }
+
+  // Validación de tipo de habitación
+  if (datos.tipo_habitacion && !validarTipoHabitacion(datos.tipo_habitacion)) {
+    errores.push(`El tipo de habitación debe ser uno de: ${TIPOS_HABITACION_VALIDOS.join(', ')}`);
+  }
+
+  // Validación de estado
+  if (datos.estado && !validarEstado(datos.estado)) {
+    errores.push(`El estado debe ser uno de: ${ESTADOS_VALIDOS.join(', ')}`);
+  }
+
+  // Validación de número de huéspedes
+  if (datos.num_huespedes) {
+    if (!Number.isInteger(datos.num_huespedes) || datos.num_huespedes < 1) {
+      errores.push('El número de huéspedes debe ser un número entero mayor a 0');
+    } else if (datos.num_huespedes > 4) {
+      errores.push('El número máximo de huéspedes es 4');
+    }
+  }
+
+  // Validación de capacidad según tipo de habitación
+  if (datos.tipo_habitacion && datos.num_huespedes && validarTipoHabitacion(datos.tipo_habitacion)) {
+    if (!validarCapacidadHabitacion(datos.tipo_habitacion, datos.num_huespedes)) {
+      const capacidad = CAPACIDADES_HABITACION[datos.tipo_habitacion];
+      errores.push(`El número de huéspedes para habitación ${datos.tipo_habitacion} debe estar entre ${capacidad.min} y ${capacidad.max}`);
+    }
+  }
+
+  return errores;
+};
