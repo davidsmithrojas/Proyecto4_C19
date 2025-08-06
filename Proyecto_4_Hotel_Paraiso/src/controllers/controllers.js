@@ -129,3 +129,40 @@ const validarDatosReserva = (datos, esCreacion = true) => {
 
   return errores;
 };
+
+// Repository class para manejar el acceso a datos
+class ReservaRepository {
+  constructor() {
+    this.filePath = filePath;
+  }
+
+  // Leer reservas del archivo JSON
+  async leerReservas() {
+    try {
+      const data = await fs.readFile(this.filePath, 'utf-8');
+      return JSON.parse(data);
+    } catch (err) {
+      return [];
+    }
+  }
+
+  // Guardar reservas en el archivo
+  async guardarReservas(reservas) {
+    try {
+      await fs.writeFile(this.filePath, JSON.stringify(reservas, null, 2));
+    } catch (err) {
+      console.error('Error al Guardar las Reservas:', err);
+      throw err;
+    }
+  }
+
+  // Obtener todas las reservas
+  async findAll() {
+    return await this.leerReservas();
+  }
+
+  // Obtener reserva por ID
+  async findById(id) {
+    const reservas = await this.leerReservas();
+    return reservas.find((r) => r.id == id);
+  }
