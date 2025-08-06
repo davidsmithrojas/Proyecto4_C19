@@ -166,3 +166,37 @@ class ReservaRepository {
     const reservas = await this.leerReservas();
     return reservas.find((r) => r.id == id);
   }
+
+// Crear nueva reserva
+  async create(reservaData) {
+    const reservas = await this.leerReservas();
+    const ultimoId = reservas.length > 0 ? reservas[reservas.length - 1].id : 0;
+    
+    const nuevaReserva = {
+      id: parseInt(ultimoId) + 1,
+      hotel: reservaData.hotel,
+      fecha_inicio: reservaData.fecha_inicio,
+      fecha_fin: reservaData.fecha_fin,
+      tipo_habitacion: reservaData.tipo_habitacion,
+      estado: reservaData.estado || 'pendiente',
+      num_huespedes: reservaData.num_huespedes,
+    };
+
+    reservas.push(nuevaReserva);
+    await this.guardarReservas(reservas);
+    return nuevaReserva;
+  }
+
+  // Actualizar reserva existente
+  async update(id, reservaData) {
+    const reservas = await this.leerReservas();
+    const index = reservas.findIndex((r) => r.id == id);
+    
+    if (index === -1) {
+      return null;
+    }
+
+    reservas[index] = { ...reservas[index], ...reservaData };
+    await this.guardarReservas(reservas);
+    return reservas[index];
+  }
