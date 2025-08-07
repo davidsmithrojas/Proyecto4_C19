@@ -200,3 +200,53 @@ class ReservaRepository {
     await this.guardarReservas(reservas);
     return reservas[index];
   }
+  
+// Eliminar reserva
+  async delete(id) {
+    const reservas = await this.leerReservas();
+    const index = reservas.findIndex((r) => r.id == id);
+    
+    if (index === -1) {
+      return false;
+    }
+
+    reservas.splice(index, 1);
+    await this.guardarReservas(reservas);
+    return true;
+  }
+}
+
+// Instancia del repository
+const reservaRepository = new ReservaRepository();
+
+// Crear reserva
+const crearReserva = async (req, res) => {
+  try {
+    // Validar datos de entrada
+    const erroresValidacion = validarDatosReserva(req.body, true);
+    if (erroresValidacion.length > 0) {
+      return res.status(400).json({ 
+        error: erroresValidacion.join('. ') 
+      });
+    }
+
+    const nuevaReserva = await reservaRepository.create(req.body);
+    res.status(201).json(nuevaReserva);
+  } catch (error) {
+    console.error('Error al crear reserva:', error);
+    res.status(500).json({ error: 'Error interno del servidor al crear la reserva' });
+  }
+};
+
+// Obtener todas las reservas con filtros
+const obtenerReservas = async (req, res) => {
+  try {
+    let resultado = await reservaRepository.findAll();
+    const {
+      hotel,
+      fecha_inicio,
+      fecha_fin,
+      tipo_habitacion,
+      estado,
+      num_huespedes,
+    } = req.query;
