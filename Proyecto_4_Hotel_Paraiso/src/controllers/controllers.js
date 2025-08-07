@@ -297,3 +297,44 @@ const obtenerReservas = async (req, res) => {
     if (estado) resultado = resultado.filter((r) => r.estado === estado);
     if (num_huespedes)
       resultado = resultado.filter((r) => r.num_huespedes == num_huespedes);
+
+    //fecha_inicio y fecha_fin son obligatorios
+    if (fecha_inicio && fecha_fin) {
+      const inicioConsulta = Date.parse(fecha_inicio);
+      const finConsulta = Date.parse(fecha_fin);
+
+      resultado = resultado.filter((r) => {
+        const inicioReserva = Date.parse(r.fecha_inicio);
+        const finReserva = Date.parse(r.fecha_fin);
+
+        return inicioReserva <= finConsulta && finReserva >= inicioConsulta;
+      });
+    }
+
+    res.json(resultado);
+  } catch (error) {
+    console.error('Error al obtener reservas:', error);
+    return res.status(500).json({ error: 'Error interno del servidor al obtener las reservas' });
+  }
+};
+
+// Obtener reserva por ID
+const obtenerReservaPorId = async (req, res) => {
+  try {
+    // Validar que el ID sea un número válido
+    const id = parseInt(req.params.id);
+    if (isNaN(id) || id <= 0) {
+      return res.status(400).json({ 
+        error: 'El ID debe ser un número entero positivo' 
+      });
+    }
+
+    const reserva = await reservaRepository.findById(id);
+    if (!reserva)
+      return res.status(404).json({ error: 'Reserva no encontrada' });
+    res.json(reserva);
+  } catch (error) {
+    console.error('Error al obtener reserva por ID:', error);
+    return res.status(500).json({ error: 'Error interno del servidor al obtener la reserva' });
+  }
+};
