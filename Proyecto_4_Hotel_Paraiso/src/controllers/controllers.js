@@ -338,3 +338,61 @@ const obtenerReservaPorId = async (req, res) => {
     return res.status(500).json({ error: 'Error interno del servidor al obtener la reserva' });
   }
 };
+
+// Actualizar reserva
+const actualizarReserva = async (req, res) => {
+  try {
+    // Validar que el ID sea un número válido
+    const id = parseInt(req.params.id);
+    if (isNaN(id) || id <= 0) {
+      return res.status(400).json({ 
+        error: 'El ID debe ser un número entero positivo' 
+      });
+    }
+
+    // Validar datos de actualización
+    const erroresValidacion = validarDatosReserva(req.body, false);
+    if (erroresValidacion.length > 0) {
+      return res.status(400).json({ 
+        error: erroresValidacion.join('. ') 
+      });
+    }
+
+    const reservaActualizada = await reservaRepository.update(id, req.body);
+    if (!reservaActualizada)
+      return res.status(404).json({ error: 'Reserva no encontrada' });
+    res.json(reservaActualizada);
+  } catch (error) {
+    console.error('Error al actualizar reserva:', error);
+    return res.status(500).json({ error: 'Error interno del servidor al actualizar la reserva' });
+  }
+};
+// Eliminar reserva
+const eliminarReserva = async (req, res) => {
+  try {
+    // Validar que el ID sea un número válido
+    const id = parseInt(req.params.id);
+    if (isNaN(id) || id <= 0) {
+      return res.status(400).json({ 
+        error: 'El ID debe ser un número entero positivo' 
+      });
+    }
+
+    const eliminado = await reservaRepository.delete(id);
+    if (!eliminado)
+      return res.status(404).json({ error: 'Reserva no encontrada' });
+    
+    return res.status(200).json({ message: 'Reserva eliminada correctamente' });
+  } catch (error) {
+    console.error('Error al eliminar reserva:', error);
+    return res.status(500).json({ error: 'Error interno del servidor al eliminar la reserva' });
+  }
+};
+//Se exportan las funciones para ser utilizadas en las rutas
+export {
+  crearReserva,
+  obtenerReservas,
+  obtenerReservaPorId,
+  actualizarReserva,
+  eliminarReserva,
+};
