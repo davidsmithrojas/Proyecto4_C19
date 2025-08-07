@@ -250,3 +250,50 @@ const obtenerReservas = async (req, res) => {
       estado,
       num_huespedes,
     } = req.query;
+
+  // Validar parámetros de filtro si se proporcionan
+    if (tipo_habitacion && !validarTipoHabitacion(tipo_habitacion)) {
+      return res.status(400).json({ 
+        error: `Tipo de habitación inválido. Debe ser uno de: ${TIPOS_HABITACION_VALIDOS.join(', ')}` 
+      });
+    }
+
+    if (estado && !validarEstado(estado)) {
+      return res.status(400).json({ 
+        error: `Estado inválido. Debe ser uno de: ${ESTADOS_VALIDOS.join(', ')}` 
+      });
+    }
+
+    if (fecha_inicio && !validarFecha(fecha_inicio)) {
+      return res.status(400).json({ 
+        error: 'La fecha de inicio debe tener el formato YYYY-MM-DD' 
+      });
+    }
+
+    if (fecha_fin && !validarFecha(fecha_fin)) {
+      return res.status(400).json({ 
+        error: 'La fecha de fin debe tener el formato YYYY-MM-DD' 
+      });
+    }
+
+    if (fecha_inicio && fecha_fin && !validarFechasCoherentes(fecha_inicio, fecha_fin)) {
+      return res.status(400).json({ 
+        error: 'La fecha de inicio debe ser anterior a la fecha de fin' 
+      });
+    }
+
+    if (num_huespedes && (!Number.isInteger(parseInt(num_huespedes)) || parseInt(num_huespedes) < 1 || parseInt(num_huespedes) > 4)) {
+      return res.status(400).json({ 
+        error: 'El número de huéspedes debe ser un entero entre 1 y 4' 
+      });
+    }
+
+    // Filtrar reservas según los parámetros de consulta
+    if (hotel) resultado = resultado.filter((r) => r.hotel === hotel);
+    if (tipo_habitacion)
+      resultado = resultado.filter(
+        (r) => r.tipo_habitacion === tipo_habitacion
+      );
+    if (estado) resultado = resultado.filter((r) => r.estado === estado);
+    if (num_huespedes)
+      resultado = resultado.filter((r) => r.num_huespedes == num_huespedes);
